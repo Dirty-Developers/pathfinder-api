@@ -3,12 +3,11 @@ from time import time, sleep
 from json import dumps
 from hashlib import sha256
 from requests import post, HTTPError
-from datetime import date
 from threading import Lock
 
-APIKEY = environ['HOTELAPI_KEY']
-SECRET = environ['HOTELAPI_SECRET']
 
+APIKEY = environ['ACTAPI_KEY']
+SECRET = environ['ACTAPI_SECRET']
 BASE_URI = 'https://api.test.hotelbeds.com/activity-api/3.0/'
 HEADERS = {
             'Api-Key': APIKEY,
@@ -76,15 +75,3 @@ def search_by_destination(from_date, to_date, destination, page=1):
 def search_by_geolocation(from_date, to_date, longitude, latitude, page=1):
     f = [{"type": "gps", "longitude": longitude, "latitude": latitude}]
     return __search_request(from_date, to_date, f, page)['activities']
-
-
-if __name__ == '__main__':
-    fdate = date(2018, 6, 14)
-    tdate = date(2018, 6, 16)
-
-    rs = search_by_destination(fdate, tdate, "PMI")
-    print(rs)
-    print("DONE")
-
-    rs = search_by_geolocation(fdate, tdate, longitude=2.938843, latitude=39.604432)
-    print("DONE")

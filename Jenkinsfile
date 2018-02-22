@@ -28,7 +28,7 @@ node() {
 -e "ACTAPI_SECRET=$act_secret" \
 -e "YELP_ID=$yelp_id" \
 -e "YELP_KEY=$yelp_key" \
--p 80:5000
+-p 5000:5000
 --name pathfinder-api'
 
                                  def container = image.run(runArgs)

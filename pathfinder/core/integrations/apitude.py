@@ -73,9 +73,9 @@ def rate_confirm(ratekey, age, name, surname):
     return response
 
 
-inDate = datetime.strptime('20180501', "%Y%m%d").date()
-outDate = datetime.strptime('20180503', "%Y%m%d").date()
-code = 'BCN'
+# inDate = datetime.strptime('20180501', "%Y%m%d").date()
+# outDate = datetime.strptime('20180503', "%Y%m%d").date()
+# code = 'BCN'
 
 # Availability use case
 # print(get_hotels_by_destination('BCN', inDate, outDate))
@@ -87,5 +87,5 @@ code = 'BCN'
 
 
 # Confirm use case
-rate="20180501|20180503|W|102|1009|SGL.ST-2|CG-FIT|BB||1~1~0||N@F304FD2FBE684E49884B71588CA7BF502313"
-print(rate_confirm(rate, 28, "Diego", "Farras"))
+# rate="20180501|20180503|W|102|1009|SGL.ST-2|CG-FIT|BB||1~1~0||N@F304FD2FBE684E49884B71588CA7BF502313"
+# print(rate_confirm(rate, 28, "Diego", "Farras"))

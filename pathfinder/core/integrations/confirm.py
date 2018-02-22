@@ -1,18 +1,4 @@
-from json import dumps
-from hashlib import sha256
-from requests import post, HTTPError
-from time import time
 from availability import PaxTypes
-
-apikey = 'hebajhkc4jj2mvd5tsjzqsss'
-secret = 'SpkwyeghW3'
-base_uri = 'https://api.test.hotelbeds.com/hotel-api/1.0/'
-operation = 'bookings'
-headers = {
-    'Api-Key': apikey,
-    'Accept': 'application/json',
-    'Content-Type': 'application/json; encoding=utf-8'
-}
 
 
 def get_pax_age(age):

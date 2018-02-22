@@ -1,6 +1,5 @@
-# https://api.test.hotelbeds.com/hotel-api/swagger/index.html#!/hotels/availability
 from enum import Enum
-from datetime import date, datetime
+from datetime import date
 
 
 class PaxTypes(Enum):
@@ -61,12 +60,6 @@ def get_availability_rq(checkin: date, checkout: date, age=900, name='Diego', su
                      "stay": get_stay(checkin, checkout),
                      "occupancies": [get_occupancy(age, name, surname)]}
     return request
-
-
-inDate = datetime.strptime('20180501', "%Y%m%d").date()
-outDate = datetime.strptime('20180503', "%Y%m%d").date()
-code = 'BCN'
-sourceMarket = 'ES'
 
 
 def get_geolocation_rq(longitude, latitude, radio, unit, checkin: date, checkout: date, age=900, name='Diego', surname='Farras', daily_rate=False):

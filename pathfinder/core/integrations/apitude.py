@@ -4,13 +4,14 @@ from json import dumps
 from hashlib import sha256
 from requests import post, HTTPError
 from time import time
+from os import environ
 
 from availability import get_destination_rq, get_geolocation_rq
 from checkrates import get_checkrate_rq
 from confirm import get_confirm_rq
 
-apikey = 'hebajhkc4jj2mvd5tsjzqsss'
-secret = 'SpkwyeghW3'
+apikey = environ['HOTELAPI_KEY']
+secret = environ['HOTELAPI_SECRET']
 base_uri = 'https://api.test.hotelbeds.com/hotel-api/1.0/'
 hotels = 'hotels'
 checkrates = 'checkrates'
@@ -71,21 +72,3 @@ def rate_confirm(ratekey, age, name, surname):
     request = get_confirm_rq(ratekey, age, name, surname)
     response = __send_post(confirmation, request)
     return response
-
-
-# inDate = datetime.strptime('20180501', "%Y%m%d").date()
-# outDate = datetime.strptime('20180503', "%Y%m%d").date()
-# code = 'BCN'
-
-# Availability use case
-# print(get_hotels_by_destination('BCN', inDate, outDate))
-# print(get_hotels_by_radio(2.62155, 39.5554, 10, 'km', inDate, outDate))
-
-
-# Checkrates use case
-# print(rate_check("20180501|20180503|W|102|1009|SGL.ST-2|CG-FIT|BB||1~1~0||N@F304FD2FBE684E49884B71588CA7BF502313"))
-
-
-# Confirm use case
-# rate="20180501|20180503|W|102|1009|SGL.ST-2|CG-FIT|BB||1~1~0||N@F304FD2FBE684E49884B71588CA7BF502313"
-# print(rate_confirm(rate, 28, "Diego", "Farras"))

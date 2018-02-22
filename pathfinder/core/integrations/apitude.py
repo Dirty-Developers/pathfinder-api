@@ -1,4 +1,3 @@
-#salida hacia core
 from datetime import date, datetime
 from json import dumps
 from hashlib import sha256

@@ -6,10 +6,9 @@ from requests import post, HTTPError
 from datetime import date
 from threading import Lock
 
+APIKEY = environ['HOTELAPI_KEY']
+SECRET = environ['HOTELAPI_SECRET']
 
-
-APIKEY = '7cz378b8983rtfyf9h4yc23w'
-SECRET = 'G7GQgqUAup'
 BASE_URI = 'https://api.test.hotelbeds.com/activity-api/3.0/'
 HEADERS = {
             'Api-Key': APIKEY,

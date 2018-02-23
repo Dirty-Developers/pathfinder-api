@@ -61,7 +61,7 @@ def format_restaurants(restaurants_rs):
 
 
 def get_integration_ancillaries(lon, lat, checkin: date, checkout: date):
-    hotels = get_hotels_by_radio(lon, lat, 151, 'km', checkin, checkout)
+    hotels = get_hotels_by_radio(lon, lat, 75, 'km', checkin, checkout)
 
     restaurants = search(longitude=lon, latitude=lat)
 

@@ -5,9 +5,9 @@ from requests import post, HTTPError
 from time import time
 from os import environ
 
-from availability import get_destination_rq, get_geolocation_rq
-from checkrates import get_checkrate_rq
-from confirm import get_confirm_rq
+from integrations.availability import get_destination_rq, get_geolocation_rq
+from integrations.checkrates import get_checkrate_rq
+from integrations.confirm import get_confirm_rq
 
 apikey = environ['HOTELAPI_KEY']
 secret = environ['HOTELAPI_SECRET']
@@ -44,7 +44,7 @@ def __send_post(path, data):
 # All operations must return apitude whole response
 # get by radio
 # Performs an hotel search by giata code (destination)
-def get_hotels_by_radio(longitude, latitude, radio, unit, checkin: date, checkout: date, age=900, name='Diego', surname='Farras', daily_rate=False):
+def get_hotels_by_radio(longitude, latitude, radio, unit, checkin: date, checkout: date, age=900, name='Diego', surname='Farras', daily_rate=True):
     request = get_geolocation_rq(longitude, latitude, radio, unit, checkin, checkout, age, name, surname, daily_rate)
     response = __send_post(hotels, request)
     return response
@@ -52,7 +52,7 @@ def get_hotels_by_radio(longitude, latitude, radio, unit, checkin: date, checkou
 
 # get by giata
 # Performs an hotel search by giata code (destination)
-def get_hotels_by_destination(destination, checkin: date, checkout: date, age=900, name='Diego', surname='Farras', daily_rate=False):
+def get_hotels_by_destination(destination, checkin: date, checkout: date, age=900, name='Diego', surname='Farras', daily_rate=True):
     request = get_destination_rq(destination, checkin, checkout, age, name, surname, daily_rate)
     response = __send_post(hotels, request)
     return response
@@ -71,3 +71,7 @@ def rate_confirm(ratekey, age, name, surname):
     request = get_confirm_rq(ratekey, age, name, surname)
     response = __send_post(confirmation, request)
     return response
+
+# inDate = datetime.strptime('20180501', "%Y%m%d").date()
+# outDate = datetime.strptime('20180503', "%Y%m%d").date()
+# get_hotels_by_radio(1,1,1,'km',inDate, outDate)

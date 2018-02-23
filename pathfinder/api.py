@@ -75,12 +75,9 @@ def list_agenda(user_id):
 def make_agenda():
     logging.info("recieved agenda request")
     data = request.get_json()
-    agenda_id = 'A1234'
-    if 'id' in data and data['id']:
-        agenda_id = data['id']
-    response = { 'id': agenda_id }
+    events = data.pop('events', [])
 
-    return jsonify(response)
+    return jsonify({'id': agenda.save(data, events)})
 
 
 @app.errorhandler(500)

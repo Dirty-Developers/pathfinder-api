@@ -73,11 +73,14 @@ def list_agenda(user_id):
 
 @app.route('/agenda', methods=['POST'])
 def make_agenda():
-    logging.info("recieved agenda request")
     data = request.get_json()
-    events = data.pop('events', [])
+    logging.info(data)
+    ag = {'id': data.get('id', None),
+          'title': data.get('title', None),
+          'user_id': data['user_id']
+          }
 
-    return jsonify({'id': agenda.save(data, events)})
+    return jsonify({'id': agenda.save(ag, data['events'])})
 
 
 @app.errorhandler(500)

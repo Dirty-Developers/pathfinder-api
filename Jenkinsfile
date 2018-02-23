@@ -28,6 +28,7 @@ node() {
 -e "ACTAPI_SECRET=$act_secret" \
 -e "YELP_ID=$yelp_id" \
 -e "YELP_KEY=$yelp_key" \
+-e "DB_PATH=/usr/local/pathfinder.db" \
 -p 5000:5000 \
 --name pathfinder-api'
 

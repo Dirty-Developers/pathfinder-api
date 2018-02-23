@@ -1,4 +1,4 @@
-from availability import PaxTypes
+from .availability import PaxTypes
 
 
 def get_pax_age(age):

@@ -1,4 +1,4 @@
-from integrations import hbgactivity
+from core.integrations import hbgactivity
 from datetime import date, timedelta
 from requests import HTTPError
 from random import random

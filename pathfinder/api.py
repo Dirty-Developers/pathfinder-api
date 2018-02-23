@@ -2,6 +2,7 @@ from flask import Flask, jsonify, request
 from datetime import datetime
 import os
 import logging
+from core import activities
 
 
 def init_logger():
@@ -36,76 +37,16 @@ def info():
 @app.route('/activities', methods=['POST'])
 def get_acivities():
     logging.info("recieved activities request")
-    response = {
-        'activities': [
-            {
-                'id': '000',
-                'name': 'Malú in concert',
-                'lon': 2.855046,
-                'lat': 39.676928,
-                'description': "No voy ni que me paguen",
-                'adress': "Calle 13, Binissalem",
-                'photo': "http://www.festivalperalada.com/media/cache/thumb_giant/uploads/images/4414_POSTS_FESTIVAL8.jpg",
-                'tags': ["music", "people"],
-                'avail': [
-                    {
-                        'date': '01-06-2018',
-                        'time': '17:00',
-                        'price': 17.25
-                    },
-                    {
-                        'date': '02-06-2018',
-                        'time': '17:00',
-                        'price': 20
-                    },
-                    {
-                        'date': '02-06-2018',
-                        'time': '19:30',
-                        'price': 22.5
-                    },
-                    {
-                        'date': '03-06-2018',
-                        'time': '17:00',
-                        'price': 20
-                    }
-                ]
-            },
-            {
-                'id': '001',
-                'name': 'Karate nudista',
-                'lon': 2.767155,
-                'lat': 39.636752,
-                'description': "El deporte de los hombres de verdad",
-                'adress': "Santa Maria del Camí",
-                'photo': "https://s3.pixers.pics/pixers/700/FO/26/38/72/20/700_FO26387220_95ee8d10dcb393464e82512232ad1549.jpg",
-                'tags': ["deporte", "karate", "nude"],
-                'avail': [
-                    {
-                        'date': '03-06-2018',
-                        'time': '17:00',
-                        'price': 0
-                    },
-                    {
-                        'date': '02-06-2018',
-                        'time': '17:00',
-                        'price': 10
-                    },
-                    {
-                        'date': '03-06-2018',
-                        'time': '19:30',
-                        'price': 5.75
-                    },
-                    {
-                        'date': '04-06-2018',
-                        'time': '17:00',
-                        'price': 10.99
-                    }
-                ]
-            }
-        ]
-    }
+    data = request.get_json()
 
-    return jsonify(response)
+    ori = (data['origin']['lon'], data['origin']['lat'])
+    dst = (data['destination']['lon'], data['destination']['lat'])
+    checkin = datetime.strptime(data['checkin'], '%d-%m-%Y')
+    checkout = datetime.strptime(data['checkout'], '%d-%m-%Y')
+
+    acts = activities.get_activities_path(ori, dst, checkin, checkout)
+
+    return jsonify({'activities': acts})
 
 
 @app.route('/ancillaries', methods=['POST'])

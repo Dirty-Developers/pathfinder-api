@@ -1,11 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*
-import sqlite as db
+import core.integrations.sqlite as db
 
 
 def save(agenda, events):
     a_id = db.store_agenda(title=agenda['title'], user_id=agenda['user_id'])
     for e in events:
+        db.store_event(event_id=e['id'], title=e['title'], longitude=e['longitude'], latitude=e['latitude'])
         db.add_event(agenda_id=a_id, event_id=e['id'], checkin=e['checkin'], checkout=e['checkout'])
     return a_id
 

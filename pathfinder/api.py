@@ -4,6 +4,7 @@ from core.ancillaries import get_integration_ancillaries
 import os
 import logging
 from core import activities
+from core import agenda
 
 
 def init_logger():
@@ -58,6 +59,42 @@ def get_ancillaries():
     outDate = datetime.strptime(data['checkout'], '%d-%m-%Y')
     response = get_integration_ancillaries(data['lon'], data['lat'], inDate, outDate)
     return jsonify(response)
+
+
+@app.route('/agenda/<agenda_id>', methods=['GET'])
+def retrieve_agenda(agenda_id):
+    agn = {
+        'title': "Agenda de cacas",
+        'user_id': 1
+    }
+    event1 = {
+        'id': 1,
+        'title': "Concierto Maluma",
+        'longitude': 10.2,
+        'latitude': 22.1,
+        'checkin': "2018-05-01",
+        'checkout': "2018-05-02"
+    }
+    event2 = {
+        'id': 2,
+        'title': "Concierto Maluma",
+        'longitude': 10.2,
+        'latitude': 22.1,
+        'checkin': "2018-05-01",
+        'checkout': "2018-05-02"
+    }
+    agenda.save(agn, [event1, event2])
+    return jsonify(agenda.retrieve(agenda_id))
+
+
+@app.route('/agenda/list/<user_id>', methods=['GET'])
+def list_agenda(user_id):
+    agn = {
+        'title': "Agenda de cacas",
+        'user_id': 1
+    }
+    agenda.save(agn, [])
+    return jsonify({'agendas': agenda.list(user_id)})
 
 
 @app.route('/agenda', methods=['POST'])

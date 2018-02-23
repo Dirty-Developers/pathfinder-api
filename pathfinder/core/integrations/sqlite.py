@@ -76,7 +76,15 @@ def add_event(**relation):
 
 
 def retrieve_agenda(agenda_id):
-    return __retrieve("SELECT * FROM agenda WHERE agenda_id='{}'".format(agenda_id))[0]
+    agenda = __retrieve("SELECT agenda_id, title FROM agenda WHERE agenda_id='{}'".format(agenda_id))[0]
+    event_ids = __retrieve("SELECT agenda_event.event_id FROM agenda INNER JOIN agenda_event ON agenda.agenda_id = agenda_event.agenda_id WHERE agenda.agenda_id='{}'".format(agenda_id))
+    events = [__retrieve("SELECT * FROM event WHERE event.event_id = {}".format(k['event_id']))[0] for k in event_ids]
+
+    return {
+        'id': agenda['agenda_id'],
+        'title': agenda['title'],
+        'events': events
+    }
 
 
 def retrieve_event(event_id):

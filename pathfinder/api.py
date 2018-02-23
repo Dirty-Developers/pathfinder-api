@@ -8,7 +8,7 @@ from core import agenda
 
 
 def init_logger():
-    level = logging.INFO
+    level = logging.DEBUG
     if 'LOG_LEVEL' in os.environ:
         if os.environ['LOG_LEVEL'] == 'DEBUG':
             level = logging.DEBUG

@@ -1,5 +1,6 @@
 from flask import Flask, jsonify, request
 from datetime import datetime
+from core.ancillaries import get_integration_ancillaries
 import os
 import logging
 
@@ -111,87 +112,10 @@ def get_acivities():
 @app.route('/ancillaries', methods=['POST'])
 def get_ancillaries():
     logging.info("recieved ancillaries request")
-    response = {
-        'hotels': [
-            {
-                'id': 'H000',
-                'name': 'Hotel Travesuras',
-                'lon': 2.742436,
-                'lat': 39.643097,
-                'description': "Todo muy serio ****",
-                'adress': "Santa Maria también, como el karate",
-                'photo': "",
-                'tags': ["hotel", "dormir"],
-                'avail': [
-                    {
-                        'date': '01-06-2018',
-                        'time': '17:00',
-                        'price': 20
-                    },
-                    {
-                        'date': '02-06-2018',
-                        'time': '17:00',
-                        'price': 20
-                    },
-                    {
-                        'date': '02-06-2018',
-                        'time': '19:30',
-                        'price': 20
-                    },
-                    {
-                        'date': '03-06-2018',
-                        'time': '17:00',
-                        'price': 20
-                    }
-                ]
-            },
-            {
-                'id': 'H001',
-                'name': 'Hotel Aragonia',
-                'lon': 2.896245,
-                'lat': 39.714968,
-                'description': "The best hotel in Mallorca",
-                'adress': "Omnipresente",
-                'photo': "https://res.cloudinary.com/teepublic/image/private/s--m-6jzJG3--/t_Preview/b_rgb:0f7b47,c_limit,f_jpg,h_630,q_90,w_630/v1491197195/production/designs/1379547_1.jpg",
-                'tags': ["best"],
-                'avail': [
-                    {
-                        'date': '03-06-2018',
-                        'time': '10:00',
-                        'price': 99.99
-                    },
-                    {
-                        'date': '02-06-2018',
-                        'time': '17:00',
-                        'price': 99.99
-                    },
-                    {
-                        'date': '03-06-2018',
-                        'time': '19:30',
-                        'price': 99.99
-                    },
-                    {
-                        'date': '04-06-2018',
-                        'time': '17:00',
-                        'price': 99.99
-                    }
-                ]
-            }
-        ],
-        'restaurants': [
-            {
-                'id': 'R000',
-                'name': 'Can Joan de s\'aigo',
-                'lon': 2.871869,
-                'lat': 39.660543,
-                'description': "es bo aixooo",
-                'adress': "Cami 33, 27A. Biniagual",
-                'photo': "http://menorcana.com/wp-content/uploads/2011/01/COCA-DE-PATATA-021-515x386.jpg",
-                'tags': ["mallorca", "typical", "bo"]
-            },
-        ]
-    }
-
+    data = request.get_json()
+    inDate = datetime.strptime(data['checkin'], '&d-%m-%Y')
+    outDate = datetime.strptime(data['checkout'], '&d-%m-%Y')
+    response = get_integration_ancillaries(data['lon'], data['lat'], inDate, outDate)
     return jsonify(response)
 
 

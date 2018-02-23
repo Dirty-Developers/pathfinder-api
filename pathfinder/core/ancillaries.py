@@ -1,9 +1,6 @@
-from integrations.apitude import get_hotels_by_radio
-from integrations.yelp import search
+from .integrations.apitude import get_hotels_by_radio
+from .integrations.yelp import search
 from datetime import date, datetime,timedelta
-
-inDate = datetime.strptime('20180501', "%Y%m%d").date()
-outDate = datetime.strptime('20180503', "%Y%m%d").date()
 
 
 def format_daily_rates(daily_rates, checkin: date):
@@ -63,7 +60,7 @@ def format_restaurants(restaurants_rs):
     return refined_restaurants
 
 
-def get_ancillaries(lon, lat, checkin: date, checkout: date):
+def get_integration_ancillaries(lon, lat, checkin: date, checkout: date):
     hotels = get_hotels_by_radio(lon, lat, 30, 'km', checkin, checkout)
 
     restaurants = search(longitude=lon, latitude=lat)
@@ -75,6 +72,8 @@ def get_ancillaries(lon, lat, checkin: date, checkout: date):
     return ancillaries
 
 
+# inDate = datetime.strptime('20180501', "%Y%m%d").date()
+# outDate = datetime.strptime('20180503', "%Y%m%d").date()
 # print("first try")
 # print(get_ancillaries(1, 1, inDate, outDate))
 # print("second try")

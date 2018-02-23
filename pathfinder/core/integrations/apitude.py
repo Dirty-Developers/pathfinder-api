@@ -4,6 +4,7 @@ from hashlib import sha256
 from requests import post, HTTPError
 from time import time
 from os import environ
+import logging as log
 
 from .availability import get_destination_rq, get_geolocation_rq
 from .checkrates import get_checkrate_rq
@@ -46,7 +47,10 @@ def __send_post(path, data):
 # Performs an hotel search by giata code (destination)
 def get_hotels_by_radio(longitude, latitude, radio, unit, checkin: date, checkout: date, age=900, name='Diego', surname='Farras', daily_rate=True):
     request = get_geolocation_rq(longitude, latitude, radio, unit, checkin, checkout, age, name, surname, daily_rate)
+    log.info("get hotel by id RQ: {}".format(request))
     response = __send_post(hotels, request)
+    log.info("gte hotel by id RS: {}".format(response))
+
     return response
 
 

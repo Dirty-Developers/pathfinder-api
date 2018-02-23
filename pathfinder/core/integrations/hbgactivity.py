@@ -84,6 +84,7 @@ def search_by_destination(from_date, to_date, destination, page=1):
 
 
 def search_by_geolocation(from_date, to_date, longitude, latitude, page=1):
+    log.info("Searching activities at point ({}, {})".format(longitude, latitude))
     f = [{"type": "gps", "longitude": longitude, "latitude": latitude}]
     rs = __search_request(from_date, to_date, f, page)
     acts = []

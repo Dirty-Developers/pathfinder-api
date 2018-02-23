@@ -1,9 +1,11 @@
 from os import environ
 from time import time, sleep
-from json import dumps
+from json import dumps, loads
 from hashlib import sha256
 from requests import post, HTTPError
 from threading import Lock
+from random import randint
+import logging as log
 
 
 APIKEY = environ['ACTAPI_KEY']
@@ -21,9 +23,17 @@ __timestamp = 0
 __index = 0
 
 
+def __build_mocks():
+    with open("data.txt", 'r') as f:
+        return loads(f.read())
+
+
+mocked_activites = __build_mocks()
+
+
 def __wait_for_qps():
     global __index
-    __index = (__index + 1) % 2
+    __index = (__index + 1) % 20
     if __index == 0:
         global __timestamp
         time_diff = time() - __timestamp
@@ -47,6 +57,7 @@ def __send_post(path, data):
 
     parsed_rs = response.json()
     if 'errors' in parsed_rs:
+        log.error(dumps(data))
         raise HTTPError("hbgactivity response with errors: {}".format(parsed_rs['errors'][0]['text']))
 
     return parsed_rs
@@ -74,4 +85,18 @@ def search_by_destination(from_date, to_date, destination, page=1):
 
 def search_by_geolocation(from_date, to_date, longitude, latitude, page=1):
     f = [{"type": "gps", "longitude": longitude, "latitude": latitude}]
-    return __search_request(from_date, to_date, f, page)['activities']
+    rs = __search_request(from_date, to_date, f, page)
+    acts = []
+    if 'activities' in rs:
+        acts = rs['activities']
+    else:
+        log.warning("Activities key not found: {}".format(rs))
+
+    if not acts:
+        global mocked_activites
+        for i in range(7):
+            a = mocked_activites[randint(0, len(mocked_activites) -1)]
+            a.get('content', {}).pop('geolocation', None)
+            acts.append(a)
+
+    return acts

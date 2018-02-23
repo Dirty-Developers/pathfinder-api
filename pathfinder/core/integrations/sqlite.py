@@ -34,8 +34,10 @@ def __retrieve(sql):
     query = None
     cursor = __cursor()
     try:
+        log.info(sql)
         select = cursor.execute(sql)
         query = [dict(r) for r in select.fetchall()]
+        log.info(query)
     except Error as e:
         log.error(e)
     finally:
@@ -78,7 +80,11 @@ def add_event(**relation):
 def retrieve_agenda(agenda_id):
     agenda = __retrieve("SELECT agenda_id, title FROM agenda WHERE agenda_id='{}'".format(agenda_id))[0]
     event_ids = __retrieve("SELECT agenda_event.event_id FROM agenda INNER JOIN agenda_event ON agenda.agenda_id = agenda_event.agenda_id WHERE agenda.agenda_id='{}'".format(agenda_id))
-    events = [__retrieve("SELECT * FROM event WHERE event.event_id = {}".format(k['event_id']))[0] for k in event_ids]
+    events = []
+    for k in event_ids:
+        result = __retrieve("SELECT * FROM event WHERE event.event_id = '{}'".format(k['event_id']))
+        if result:
+            events.append(result[0])
 
     return {
         'id': agenda['agenda_id'],

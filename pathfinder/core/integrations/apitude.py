@@ -5,9 +5,9 @@ from requests import post, HTTPError
 from time import time
 from os import environ
 
-from integrations.availability import get_destination_rq, get_geolocation_rq
-from integrations.checkrates import get_checkrate_rq
-from integrations.confirm import get_confirm_rq
+from .availability import get_destination_rq, get_geolocation_rq
+from .checkrates import get_checkrate_rq
+from .confirm import get_confirm_rq
 
 apikey = environ['HOTELAPI_KEY']
 secret = environ['HOTELAPI_SECRET']

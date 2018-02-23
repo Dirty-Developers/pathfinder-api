@@ -4,7 +4,7 @@ from requests import get, HTTPError
 from os import environ as env
 
 
-HEADERS = {'Accept': "application/json", 'Content-Type': "application/json", 'Authorization': "Bearer " + env['yelp_key']}
+HEADERS = {'Accept': "application/json", 'Content-Type': "application/json", 'Authorization': "Bearer " + env['YELP_KEY']}
 URL = "https://api.yelp.com/v3/businesses/"
 
 

@@ -1,6 +1,6 @@
 
 # export environment file
-export `tail -1 .env`
+export `cat .env`
 
 # run flask app
 export FLASK_APP=pathfinder/api.py

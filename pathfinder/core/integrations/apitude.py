@@ -71,7 +71,3 @@ def rate_confirm(ratekey, age, name, surname):
     request = get_confirm_rq(ratekey, age, name, surname)
     response = __send_post(confirmation, request)
     return response
-
-# inDate = datetime.strptime('20180501', "%Y%m%d").date()
-# outDate = datetime.strptime('20180503', "%Y%m%d").date()
-# get_hotels_by_radio(1,1,1,'km',inDate, outDate)

@@ -63,37 +63,11 @@ def get_ancillaries():
 
 @app.route('/agenda/<agenda_id>', methods=['GET'])
 def retrieve_agenda(agenda_id):
-    agn = {
-        'title': "Agenda de cacas",
-        'user_id': 1
-    }
-    event1 = {
-        'id': 1,
-        'title': "Concierto Maluma",
-        'longitude': 10.2,
-        'latitude': 22.1,
-        'checkin': "2018-05-01",
-        'checkout': "2018-05-02"
-    }
-    event2 = {
-        'id': 2,
-        'title': "Concierto Maluma",
-        'longitude': 10.2,
-        'latitude': 22.1,
-        'checkin': "2018-05-01",
-        'checkout': "2018-05-02"
-    }
-    agenda.save(agn, [event1, event2])
     return jsonify(agenda.retrieve(agenda_id))
 
 
 @app.route('/agenda/list/<user_id>', methods=['GET'])
 def list_agenda(user_id):
-    agn = {
-        'title': "Agenda de cacas",
-        'user_id': 1
-    }
-    agenda.save(agn, [])
     return jsonify({'agendas': agenda.list(user_id)})
 
 

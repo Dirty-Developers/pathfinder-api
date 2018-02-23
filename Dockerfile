@@ -4,5 +4,4 @@ COPY requirements.txt .
 RUN pip3 install -r requirements.txt
 COPY pathfinder /usr/local/pathfinder/
 WORKDIR /usr/local/pathfinder/
-RUN cat schema.sql | sqlite3 pathfinder.db
 CMD flask run --host 0.0.0.0

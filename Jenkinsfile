@@ -29,7 +29,7 @@ node() {
 -e "YELP_ID=$yelp_id" \
 -e "YELP_KEY=$yelp_key" \
 -e "DB_PATH=/usr/local/pathfinder/pathfinder.db" \
--p 5000:5000 \
+-p 80:5000 \
 --name pathfinder-api'
 
                                  def container = image.run(runArgs)

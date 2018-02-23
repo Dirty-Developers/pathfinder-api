@@ -54,7 +54,7 @@ def get_geolocation(longitude, latitude, radius, unit='km'):
     return geolocation
 
 
-def get_availability_rq(checkin: date, checkout: date, age=900, name='Diego', surname='Farras', daily_rate=False):
+def get_availability_rq(checkin: date, checkout: date, age=900, name='Diego', surname='Farras', daily_rate=True):
     request = {"dailyRate": daily_rate,
                      "language": "ENG",
                      "stay": get_stay(checkin, checkout),
@@ -62,13 +62,13 @@ def get_availability_rq(checkin: date, checkout: date, age=900, name='Diego', su
     return request
 
 
-def get_geolocation_rq(longitude, latitude, radio, unit, checkin: date, checkout: date, age=900, name='Diego', surname='Farras', daily_rate=False):
+def get_geolocation_rq(longitude, latitude, radio, unit, checkin: date, checkout: date, age=900, name='Diego', surname='Farras', daily_rate=True):
     request = get_availability_rq(checkin, checkout, age, name, surname, daily_rate)
     request["geolocation"] = get_geolocation(longitude, latitude, radio, unit)
     return request
 
 
-def get_destination_rq(destination, checkin: date, checkout: date, age=900, name='Diego', surname='Farras', daily_rate=False):
+def get_destination_rq(destination, checkin: date, checkout: date, age=900, name='Diego', surname='Farras', daily_rate=True):
     request = get_availability_rq(checkin, checkout, age, name, surname, daily_rate)
     request["destination"] = get_destination(destination)
     request["debug"] = get_debug("True")

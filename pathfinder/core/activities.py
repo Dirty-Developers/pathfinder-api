@@ -10,7 +10,7 @@ def get_activities_path(origin, destination, checkin, checkout):
     pool = []
     gotten = []
     for point in __get_middle_points(origin, destination):
-        rs = None
+        rs = []
         try:
             rs = hbgactivity.search_by_geolocation(checkin, checkout, longitude=point[0], latitude=point[1])
         except HTTPError:

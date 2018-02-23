@@ -54,8 +54,8 @@ def get_acivities():
 def get_ancillaries():
     logging.info("recieved ancillaries request")
     data = request.get_json()
-    inDate = datetime.strptime(data['checkin'], '&d-%m-%Y')
-    outDate = datetime.strptime(data['checkout'], '&d-%m-%Y')
+    inDate = datetime.strptime(data['checkin'], '%d-%m-%Y')
+    outDate = datetime.strptime(data['checkout'], '%d-%m-%Y')
     response = get_integration_ancillaries(data['lon'], data['lat'], inDate, outDate)
     return jsonify(response)
 

@@ -61,20 +61,15 @@ def format_restaurants(restaurants_rs):
 
 
 def get_ancillaries(lon, lat, checkin: date, checkout: date):
-
     hotels = get_hotels_by_radio(lon, lat, 30, 'km', checkin, checkout)
     final_hotels = format_hotels(hotels, checkin)
-    print(final_hotels)
-
 
     restaurants = search(longitude=lon, latitude=lat)
     final_restaurants = format_restaurants(restaurants)
-    print(final_restaurants)
 
     ancillaries = {
         "hotels": format_hotels(hotels, checkin),
         "restaurants": format_restaurants(restaurants)
     }
-    print(ancillaries)
+    return ancillaries
 
-get_ancillaries(2.171081, 41.383738, inDate, outDate)

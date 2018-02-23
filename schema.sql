@@ -11,7 +11,7 @@ create table agenda(
 );
 
 create table event(
-    event_id integer not null primary key autoincrement,
+    event_id string not null primary key,
     title text not null,
 	longitude real,
 	latitude real,
@@ -20,7 +20,7 @@ create table event(
 
 create table agenda_event(
 	agenda_id integer not null,
-	event_id integer not null,
+	event_id string not null,
 	checkin string,
 	checkout string,
 	foreign key(agenda_id) references agenda(agenda_id),

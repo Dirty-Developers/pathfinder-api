@@ -8,6 +8,8 @@ from os import environ as env
 
 __db = sqlite3.connect(env['DB_PATH'])
 __db.row_factory = sqlite3.Row
+with open("schema.sql") as schema:
+    __db.executescript(schema.read())
 
 
 def __cursor():
@@ -62,9 +64,9 @@ def store_event(**event):
     Create new event
     """
     if event.get('type'):
-        sql = "INSERT INTO event(title, longitude, latitude, event_type) VALUES('{}','{}','{}','{}')".format(event['title'], event['longitude'], event['latitude'], event['type'])
+        sql = "INSERT OR IGNORE INTO event(event_id, title, longitude, latitude, event_type) VALUES('{}','{}','{}','{}','{}')".format(event['event_id'], event['title'], event['longitude'], event['latitude'], event['type'])
     else:
-        sql = "INSERT INTO event(title, longitude, latitude) VALUES('{}','{}','{}')".format(event['title'], event['longitude'], event['latitude'])
+        sql = "INSERT OR IGNORE INTO event(event_id, title, longitude, latitude) VALUES('{}','{}','{}','{}')".format(event['event_id'], event['title'], event['longitude'], event['latitude'])
     return __store(sql)
 
 
@@ -75,7 +77,6 @@ def add_event(**relation):
 
 def retrieve_agenda(agenda_id):
     return __retrieve("SELECT * FROM agenda WHERE agenda_id='{}'".format(agenda_id))[0]
-
 
 
 def retrieve_event(event_id):

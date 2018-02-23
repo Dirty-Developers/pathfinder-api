@@ -78,7 +78,7 @@ def add_event(**relation):
 
 
 def retrieve_agenda(agenda_id):
-    agenda = __retrieve("SELECT agenda_id, title FROM agenda WHERE agenda_id='{}'".format(agenda_id))[0]
+    agenda = __retrieve("SELECT agenda_id, title FROM agenda ORDER BY agenda_id DESC LIMIT 1".format(agenda_id))[0]
     event_ids = __retrieve("SELECT agenda_event.event_id FROM agenda INNER JOIN agenda_event ON agenda.agenda_id = agenda_event.agenda_id WHERE agenda.agenda_id='{}'".format(agenda_id))
     events = []
     for k in event_ids:
